@@ -22,6 +22,7 @@ void deleteMiddle();
 void deleteLast();
 
 void searchList();
+void count(); 
 
 node *HEADER = NULL, *CURRENT = NULL, *t;
 
@@ -37,6 +38,7 @@ int main()
     printf("\t4. Insert\n");
     printf("\t5. Search\n");
     printf("\t6. Delete\n");
+    printf("\t7. Count\n");
     printf("\t10. Exit\n");
 
     do
@@ -114,6 +116,9 @@ int main()
                 printf("================\n");
                 break;
             }
+            break;
+        case 7: 
+            count();
             break;
         case 10:
             exit(1);
@@ -278,7 +283,6 @@ void deleteMiddle()
 
 }
 
-
 void insertLast()
 {
     t = (node *)malloc(sizeof(node));
@@ -342,4 +346,11 @@ void searchList()
     {
         printf("Not found\n");
     }
+}
+
+void count() 
+{
+    int i = 0; 
+    for (node *k = HEADER; k != NULL; k = k->next, i++);
+    printf("%d\n", i); 
 }
