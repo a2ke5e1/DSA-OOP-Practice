@@ -14,7 +14,7 @@ void display() {
 }
 
 void push(int i) {
-    if ( top >= 99) {
+    if ( top >= end - 1) {
         printf("Stack is Full\n");
         return;  
     }
