@@ -7,7 +7,6 @@ typedef struct node
     struct node *next;
 } node;
 
-void memoaryCheck(node *);
 void print(node *);
 
 void push();
@@ -53,17 +52,6 @@ int main()
     return 0;
 }
 
-void memoaryCheck(node *x)
-{
-    if (x == NULL)
-    {
-        printf("\n=========================\n");
-        printf("\n\nMemoary Allocation Failed\n\n");
-        printf("\n=========================\n");
-        exit(1);
-    }
-}
-
 void print(node *x)
 {
 
@@ -89,8 +77,7 @@ void push()
     scanf("%d", &t->data);
     t->next = NULL;
 
-    memoaryCheck(t);
-
+   
     if (HEADER == NULL)
     {
         HEADER = t;
