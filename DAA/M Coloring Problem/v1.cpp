@@ -1,12 +1,12 @@
 #include <stdio.h>
 
-int g[10][10], n, totalColors, color[10];
+int g[10][10], n, totalColors, vertex_color[10];
 
 
 int isSafe() {
     for (int i = 1; i <= n; i++) {
         for (int j = i + 1; j <= n; j++) {
-            if (g[i][j] && color[i] == color[j]) {
+            if (g[i][j] && vertex_color[i] == vertex_color[j]) {
                 return 0;
             }
         }
@@ -22,7 +22,7 @@ int graphColor(int nextVertex) {
             // print the solution
             printf("\n"); 
             for (int i = 1; i <= n; i++) {
-                printf("%d ", color[i]);
+                printf("%d ", vertex_color[i]);
             }
             return 1;
         }
@@ -30,11 +30,11 @@ int graphColor(int nextVertex) {
     }
 
     for (int i = 1; i <= totalColors; i++) {
-        color[nextVertex] = i;
+        vertex_color[nextVertex] = i;
         if (graphColor(nextVertex + 1)) {
             return 1;
         }
-        color[nextVertex] = 0;
+        vertex_color[nextVertex] = 0;
     }
 
     return 0;
@@ -55,7 +55,7 @@ int main() {
     }
 
     for (int i = 1; i <= totalColors; i++) {
-        color[i] = 0;
+        vertex_color[i] = 0;
     }
 
     if (!graphColor(1)) {
