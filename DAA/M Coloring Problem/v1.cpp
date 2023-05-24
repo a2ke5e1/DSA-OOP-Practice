@@ -4,6 +4,7 @@ int g[10][10], n, totalColors, vertex_color[10];
 
 
 int isSafe() {
+    // checks if vertex[i] and vertex[j] are adjacent and have same color
     for (int i = 1; i <= n; i++) {
         for (int j = i + 1; j <= n; j++) {
             if (g[i][j] && vertex_color[i] == vertex_color[j]) {
@@ -18,7 +19,6 @@ int isSafe() {
 int graphColor(int nextVertex) {
     if ( nextVertex == n+1) {
         if (isSafe()) {
-
             // print the solution
             printf("\n"); 
             for (int i = 1; i <= n; i++) {
