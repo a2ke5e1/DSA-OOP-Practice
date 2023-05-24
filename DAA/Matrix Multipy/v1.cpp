@@ -1,4 +1,6 @@
 #include <stdio.h>
+// formula for matrix multiplication: A[i][j] = A[i][k] + A[k+1][j] + p[i-1]*p[k]*p[j]
+                                               
 int matrix(int p[], int i, int j) {
     if(i == j) {
         return 0;
