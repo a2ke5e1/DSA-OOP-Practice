@@ -1,63 +1,51 @@
 #include <stdio.h>
+#define MAX 1000
 
-void dijkstra(int cost[100][100], int n)
-{
-    int source, dist[100]; 
-    int i, cnt = 0, z, k, j, u;
+int n, cost[MAX][MAX], source; 
 
-    printf("Enter the source node whose shortest path is to be determined: ");
-    scanf("%d", &source);
-    for (i = 1; i <= n; i++)
-    {
-        dist[i] = cost[source][i];
+void dijkstra(int cost[MAX][MAX], int source) {
+    int distances[MAX]; 
+    for (int i = 1; i <= n; i++) {
+        distances[i] = cost[source][i];
     }
-    for (k = 2; k < n; k++)
-    {
-        for (u = 1; u <= n; u++)
-        {
-            cnt = 0; // reset the counter for each node
-            for (z = 1; z <= n; z++)
-            {
-                if (cost[z][u] != 1000)
-                {
-                    cnt += 1;
-                }
+    distances[source] = 0;
+    for (int i = 1; i <= n; i++) {
+        if (i == source) continue;
+        for (int j = 1; j <= n; j++) {
+            if (j == source) continue;
+            if ( cost[j][i] >= 1000 ) continue; // no edge from j to i
+
+            if (distances[i] > distances[j] + cost[j][i]) {
+                distances[i] = distances[j] + cost[j][i];
             }
-            if (cnt != 0)
-            {
-                for (i = 1; i <= n; i++)
-                {
-                    if (dist[u] > (dist[i] + cost[i][u]))
-                    {
-                        dist[u] = dist[i] + cost[i][u];
-                    }   
-                }
-            }
-        }
+        }   
     }
-    printf("The shortest path from %d to all other nodes is: ", source);
-    for (i = 1; i <= n; i++)
-    {
-        if (i != source)
-        {
-            printf("\n%d : %d", i, dist[i]);
-        }
+
+
+    printf("Shortest distances from source %d:\n", source);
+    for (int i = 1; i <= n; i++) {
+        if (i == source) continue;
+        printf("%d -> %d: %d\n", source, i, distances[i]);
     }
+
 }
+
 
 int main()
 {
-    int n, i, j, cost[100][100];
     printf("Enter the number of nodes: ");
     scanf("%d", &n);
     printf("Enter the cost matrix:\n");
-    for (i = 1; i <= n; i++)
+    
+    for (int i = 1; i <= n; i++)
     {
-        for (j = 1; j <= n; j++)
+        for (int j = 1; j <= n; j++)
         {
             scanf("%d", &cost[i][j]);
         }
     }
-    dijkstra(cost, n);
+    printf("Source: "); 
+    scanf("%d", &source); 
+    dijkstra(cost, source);
     return 0;
 }
