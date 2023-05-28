@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 
 #define MAX_QUEENS 10
@@ -23,6 +22,7 @@ void solveNQueens(int row, int n, int board[MAX_QUEENS], int *count)
         printf("\nSolutions are: ");
         for (int i = 1; i <= n; i++)
             printf(" %d ", board[i]);
+    
         for (int i = 1; i <= n; i++)
         {
             printf("\n");

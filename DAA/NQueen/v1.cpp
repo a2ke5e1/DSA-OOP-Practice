@@ -1,89 +1,60 @@
-#include <stdio.h>
-
-int board[10][10];
-int n;
-
-void printBoard()
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+int x[20],count=0;
+int place(int k,int i)
 {
-    for (int i = 0; i < n; i++)
+    int j;
+    for(j=1;j<=k-1;j++)
     {
-        for (int j = 0; j < n; j++)
+        if((x[j]==i) || (abs(x[j]-i)==abs(j-k)))
         {
-            printf("%d ", board[i][j]);
-        }
-        printf("\n");
-    }
-}
-
-int isSafe(int board[10][10], int row, int col)
-{
-
-    for (int i = 0; i < col; i++)
-        if (board[row][i])
             return 0;
-
-    for (int i = row, j = col; i >= 0 && j >= 0; i--, j--)
-        if (board[i][j])
-            return 0;
-
-    for (int i = row, j = col; j >= 0 && i < n; i++, j--)
-        if (board[i][j])
-            return 0;
-
-    return 1;
-}
-
-int solveNQUtil(int board[10][10], int col)
-{
-
-    if (col >= n)
-        return 1;
-
-    for (int i = 0; i < n; i++)
-    {
-
-        if (isSafe(board, i, col))
-        {
-
-            board[i][col] = 1;
-
-            if (solveNQUtil(board, col + 1))
-                return 1;
-
-            board[i][col] = 0; // BACKTRACK
         }
     }
-
-    return 0;
-}
-
-int solveNQ()
-{
-
-    if (solveNQUtil(board, 0) == 0)
-    {
-        printf("Solution does not exist");
-        return 0;
-    }
-
-    printBoard();
     return 1;
 }
-
+void nqueens(int k,int n)
+{
+    int i;
+    for(i=1;i<=n;i++)
+    {
+        if(place(k,i))
+        {
+            x[k]=i;
+            if(k==n)
+            {
+                count++;
+                printf("\n\nSolution %d:\n",count);
+                for(i=1;i<=n;i++)
+                {
+                    for(int j=1;j<=n;j++)
+                    {
+                        if(x[i]==j)
+                        {
+                            printf("Q\t");
+                        }
+                        else
+                        {
+                            printf("*\t");
+                        }
+                    }
+                    printf("\n");
+                }
+            }
+            else
+            {
+                nqueens(k+1,n);
+            }
+        }
+    }
+}
 int main()
 {
-
-    printf("Enter the value of n: ");
-    scanf("%d", &n);
-
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            board[i][j] = 0;
-        }
-    }
-
-    solveNQ();
+    int n;
+    printf("Enter the number of queens: ");
+    scanf("%d",&n);
+    nqueens(1,n);
+    printf("\n\nTotal solutions: %d",count);
     return 0;
 }
