@@ -1,58 +1,63 @@
 #include <stdio.h>
-#include <limits.h>
+#include <stdlib.h>
 #include <math.h>
-#define MAX = 10
 
-int fnPlace(int K, int I, int X[10])
+#define MAX_QUEENS 10
+
+int isSafe(int row, int col, int board[MAX_QUEENS])
 {
-    int J;
-    for (J = 1; J <= K - 1; J++)
+    for (int prevRow = 1; prevRow < row; prevRow++)
     {
-        if (X[J] == I || abs(J - K) == abs(X[J] - I))
+        int prevCol = board[prevRow];
+        if (prevCol == col || abs(prevRow - row) == abs(prevCol - col))
             return 0;
     }
     return 1;
 }
 
-void fnQueens(int K, int N)
+void solveNQueens(int row, int n, int board[MAX_QUEENS], int *count)
 {
-    int I, J, L;
-    static int Count, X[10];
-    for (I = 1; I <= N; I++)
+    if (row > n)
     {
-        if (fnPlace(K, I, X))
+        printf("\nFeasible solution: %d", ++(*count));
+        printf("\nSolutions are: ");
+        for (int i = 1; i <= n; i++)
+            printf(" %d ", board[i]);
+        for (int i = 1; i <= n; i++)
         {
-            X[K] = I;
-            if (K == N)
+            printf("\n");
+            for (int j = 1; j <= n; j++)
             {
-                printf("\nFeassible solution : %d", ++Count);
-                printf("\nSolutions are : ");
-                for (J = 1; J <= N; J++)
-                    printf(" %d ", X[J]);
-                for (J = 1; J <= N; J++)
-                {
-                    printf("\n");
-                    for (L = 1; L <= N; L++)
-                    {
-                        if (L == X[J])
-                            printf(" X ");
-                        else
-                            printf(" 0 ");
-                    }
-                }
+                if (j == board[i])
+                    printf(" X ");
+                else
+                    printf(" 0 ");
             }
-            else
-                fnQueens(K + 1, N);
+        }
+    }
+    else
+    {
+        for (int col = 1; col <= n; col++)
+        {
+            if (isSafe(row, col, board))
+            {
+                board[row] = col;
+                solveNQueens(row + 1, n, board, count);
+            }
         }
     }
 }
+
 int main()
 {
-    int No;
-    // clrscr();
-    printf("Enter the no of Queenes : ");
-    scanf("%d", &No);
-    fnQueens(1, No);
-    // getch();
-    return 0; 
+    int n;
+    printf("Enter the number of Queens: ");
+    scanf("%d", &n);
+
+    int board[MAX_QUEENS] = {0};
+    int count = 0;
+
+    solveNQueens(1, n, board, &count);
+
+    return 0;
 }
